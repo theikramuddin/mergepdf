@@ -20,7 +20,10 @@ export function formatFileSize(bytes: number): string {
 }
 
 export function downloadBlob(data: Uint8Array, filename: string) {
-  const blob = new Blob([data], { type: "application/pdf" });
+  const bytes = new Uint8Array(data.byteLength);
+  bytes.set(data);
+
+  const blob = new Blob([bytes.buffer], { type: "application/pdf" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useDropzone } from "react-dropzone";
+import { useDropzone, type FileRejection } from "react-dropzone";
 import { useCallback } from "react";
 
 const MAX_SIZE = 20 * 1024 * 1024; // 20MB
@@ -12,7 +12,7 @@ interface DropZoneProps {
 
 export default function DropZone({ onFiles, hasFiles }: DropZoneProps) {
   const onDrop = useCallback(
-    (acceptedFiles: File[], rejectedFiles: { file: File; errors: { code: string; message: string }[] }[]) => {
+    (acceptedFiles: File[], rejectedFiles: readonly FileRejection[]) => {
       if (rejectedFiles.length > 0) {
         const messages = rejectedFiles
           .map((r) => `${r.file.name}: ${r.errors.map((e) => e.message).join(", ")}`)
